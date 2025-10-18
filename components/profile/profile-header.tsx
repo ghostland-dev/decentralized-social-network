@@ -12,13 +12,20 @@ import type { NostrProfile } from "@/lib/nostr/types"
 interface ProfileHeaderProps {
   pubkey: string
   isOwnProfile: boolean
+  profile?: NostrProfile | null
 }
 
-export function ProfileHeader({ pubkey, isOwnProfile }: ProfileHeaderProps) {
+export function ProfileHeader({ pubkey, isOwnProfile, profile: profileProp }: ProfileHeaderProps) {
   const { client } = useNostr()
   const [profile, setProfile] = useState<NostrProfile | null>(null)
   const [showEditDialog, setShowEditDialog] = useState(false)
   const [copied, setCopied] = useState(false)
+
+  useEffect(() => {
+    if (profileProp) {
+      setProfile(profileProp)
+    }
+  }, [profileProp])
 
   useEffect(() => {
     if (!client) return
