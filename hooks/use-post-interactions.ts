@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react"
 import { useNostr } from "@/contexts/nostr-context"
 import { NostrKind } from "@/lib/nostr/types"
+import { logger } from "@/lib/logger"
 
 interface PostInteractions {
   likes: number
@@ -69,7 +70,7 @@ export function usePostInteractions(eventId: string, eventAuthor: string) {
           sub.close()
         }
       } catch (error) {
-        console.error("Failed to load interactions:", error)
+        logger.error('Failed to load interactions', error)
         setLoading(false)
       }
     }

@@ -1,4 +1,5 @@
 "use client"
+import { logger } from "@/lib/logger"
 
 import type NostrClient from "./client"
 import { NostrKind } from "./types"
@@ -60,7 +61,7 @@ export async function getLightningInvoice(lud16: string, amount: number, zapRequ
     const invoiceData = await invoiceResponse.json()
     return invoiceData.pr || null
   } catch (error) {
-    console.error("Failed to get lightning invoice:", error)
+    logger.error("Failed to get lightning invoice:", error)
     return null
   }
 }
@@ -74,7 +75,7 @@ export function openLightningWallet(invoice: string) {
         return (window as any).webln.sendPayment(invoice)
       })
       .catch((error: any) => {
-        console.error("WebLN payment failed:", error)
+        logger.error("WebLN payment failed:", error)
         // Fallback to lightning: URI
         window.location.href = `lightning:${invoice}`
       })

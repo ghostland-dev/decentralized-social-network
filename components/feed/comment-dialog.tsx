@@ -1,4 +1,5 @@
 "use client"
+import { logger } from "@/lib/logger"
 
 import { useState } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
@@ -33,7 +34,7 @@ export function CommentDialog({ open, onOpenChange, eventId, eventAuthor, origin
       onOpenChange(false)
     } catch (error) {
       toast.error("Failed to post comment")
-      console.error(error)
+      logger.error(error)
     } finally {
       setIsPosting(false)
     }

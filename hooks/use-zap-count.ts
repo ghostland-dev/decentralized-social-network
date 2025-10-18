@@ -1,5 +1,7 @@
 "use client"
 
+import { logger } from "@/lib/logger"
+
 import { useState, useEffect } from "react"
 import { useNostr } from "@/contexts/nostr-context"
 import { NostrKind } from "@/lib/nostr/types"
@@ -33,7 +35,7 @@ export function useZapCount(eventId: string) {
           sub.close()
         }
       } catch (error) {
-        console.error("Failed to load zaps:", error)
+        logger.error("Failed to load zaps:", error)
         setLoading(false)
       }
     }

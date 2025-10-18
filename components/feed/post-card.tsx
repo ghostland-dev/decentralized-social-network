@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, memo, useCallback } from "react"
 import { formatDistanceToNow } from "date-fns"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -14,6 +14,7 @@ import { ZapDialog } from "@/components/zaps/zap-dialog"
 import { toast } from "sonner"
 import type { NostrEvent, NostrProfile } from "@/lib/nostr/types"
 import { cn } from "@/lib/utils"
+import { logger } from "@/lib/logger"
 
 interface PostCardProps {
   event: NostrEvent
@@ -22,7 +23,7 @@ interface PostCardProps {
   authorProfile?: NostrProfile
 }
 
-export function PostCard({ event, authorName, authorPicture, authorProfile }: PostCardProps) {
+export const PostCard = memo(function PostCard({ event, authorName, authorPicture, authorProfile }: PostCardProps) {
   const { client, user } = useNostr()
   const { interactions, loading } = usePostInteractions(event.id, event.pubkey)
   const { zapCount, loading: zapLoading } = useZapCount(event.id)
@@ -34,7 +35,7 @@ export function PostCard({ event, authorName, authorPicture, authorProfile }: Po
   const timeAgo = formatDistanceToNow(new Date(event.created_at * 1000), { addSuffix: true })
   const shortPubkey = `${event.pubkey.slice(0, 8)}...${event.pubkey.slice(-4)}`
 
-  const handleLike = async () => {
+  const handleLike = useCallback(async () => {
     if (!client || !user?.privkey || interactions.isLikedByUser) return
 
     setIsLiking(true)
@@ -43,13 +44,13 @@ export function PostCard({ event, authorName, authorPicture, authorProfile }: Po
       toast.success("Post liked!")
     } catch (error) {
       toast.error("Failed to like post")
-      console.error(error)
+      logger.error('Failed to like post', error)
     } finally {
       setIsLiking(false)
     }
-  }
+  }, [client, user?.privkey, interactions.isLikedByUser, event.id, event.pubkey])
 
-  const handleRepost = async () => {
+  const handleRepost = useCallback(async () => {
     if (!client || !user?.privkey || interactions.isRepostedByUser) return
 
     setIsReposting(true)
@@ -58,20 +59,21 @@ export function PostCard({ event, authorName, authorPicture, authorProfile }: Po
       toast.success("Post reposted!")
     } catch (error) {
       toast.error("Failed to repost")
-      console.error(error)
+      logger.error('Failed to repost', error)
     } finally {
       setIsReposting(false)
     }
-  }
+  }, [client, user?.privkey, interactions.isRepostedByUser, event])
 
-  const handleShare = async () => {
+  const handleShare = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(`nostr:${event.id}`)
       toast.success("Event ID copied to clipboard")
     } catch (error) {
       toast.error("Failed to copy")
+      logger.error('Failed to copy to clipboard', error)
     }
-  }
+  }, [event.id])
 
   return (
     <>
@@ -185,4 +187,4 @@ export function PostCard({ event, authorName, authorPicture, authorProfile }: Po
       />
     </>
   )
-}
+})

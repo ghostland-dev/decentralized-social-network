@@ -1,4 +1,5 @@
 "use client"
+import { logger } from "@/lib/logger"
 
 import type React from "react"
 
@@ -81,7 +82,7 @@ export function MessageThread({ pubkey }: MessageThreadProps) {
 
               setMessages(Array.from(messageMap.values()).sort((a, b) => a.timestamp - b.timestamp))
             } catch (error) {
-              console.error("Failed to decrypt message:", error)
+              logger.error("Failed to decrypt message:", error)
               messageMap.set(event.id, {
                 id: event.id,
                 content: "[Failed to decrypt]",
@@ -100,7 +101,7 @@ export function MessageThread({ pubkey }: MessageThreadProps) {
           sub.close()
         }
       } catch (error) {
-        console.error("Failed to load messages:", error)
+        logger.error("Failed to load messages:", error)
         setLoading(false)
       }
     }
@@ -131,7 +132,7 @@ export function MessageThread({ pubkey }: MessageThreadProps) {
       setNewMessage("")
     } catch (error) {
       toast.error("Failed to send message")
-      console.error(error)
+      logger.error(error)
     } finally {
       setSending(false)
     }

@@ -10,6 +10,7 @@ import { useNostr } from "@/contexts/nostr-context"
 import { Loader2 } from "lucide-react"
 import { toast } from "sonner"
 import type { NostrProfile } from "@/lib/nostr/types"
+import { logger } from "@/lib/logger"
 
 interface EditProfileDialogProps {
   open: boolean
@@ -41,7 +42,7 @@ export function EditProfileDialog({ open, onOpenChange, currentProfile, onProfil
       onOpenChange(false)
     } catch (error) {
       toast.error("Failed to update profile")
-      console.error(error)
+      logger.error('Failed to update profile', error)
     } finally {
       setSaving(false)
     }

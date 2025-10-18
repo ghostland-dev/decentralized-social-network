@@ -1,4 +1,5 @@
 "use client"
+import { logger } from "@/lib/logger"
 
 import { useEffect, useState } from "react"
 import { useParams } from "next/navigation"
@@ -25,7 +26,7 @@ export default function UserProfilePage() {
         const userProfile = await client.getProfile(pubkey)
         setProfile(userProfile)
       } catch (error) {
-        console.error("Failed to load profile:", error)
+        logger.error("Failed to load profile:", error)
       } finally {
         setLoading(false)
       }
