@@ -60,9 +60,9 @@ export interface PostInteractions {
 }
 
 export async function getPostInteractions(
-  client: NostrClient,
-  eventId: string,
-  userPubkey?: string,
+  _client: NostrClient,
+  _eventId: string,
+  _userPubkey?: string,
 ): Promise<PostInteractions> {
   const interactions: PostInteractions = {
     likes: 0,

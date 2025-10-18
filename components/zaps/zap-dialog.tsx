@@ -83,7 +83,7 @@ export function ZapDialog({
           <DialogHeader>
             <DialogTitle>Unable to Zap</DialogTitle>
             <DialogDescription>
-              This user hasn't set up a Lightning address yet. They need to add a Lightning address (lud16) to their
+              This user hasn&apos;t set up a Lightning address yet. They need to add a Lightning address (lud16) to their
               profile to receive zaps.
             </DialogDescription>
           </DialogHeader>

@@ -65,16 +65,21 @@ export async function getLightningInvoice(lud16: string, amount: number, zapRequ
   }
 }
 
+interface WebLN {
+  enable: () => Promise<void>
+  sendPayment: (invoice: string) => Promise<unknown>
+}
+
 export function openLightningWallet(invoice: string) {
   // Try to open with WebLN first
-  if (typeof window !== "undefined" && (window as any).webln) {
-    ;(window as any).webln
+  if (typeof window !== "undefined" && (window as { webln?: WebLN }).webln) {
+    const webln = (window as unknown as { webln: WebLN }).webln
+    webln
       .enable()
       .then(() => {
-        return (window as any).webln.sendPayment(invoice)
+        return webln.sendPayment(invoice)
       })
-      .catch((error: any) => {
-        console.error("WebLN payment failed:", error)
+      .catch((_error: unknown) => {
         // Fallback to lightning: URI
         window.location.href = `lightning:${invoice}`
       })
@@ -84,7 +89,7 @@ export function openLightningWallet(invoice: string) {
   }
 }
 
-export async function getZapCount(client: NostrClient, eventId: string): Promise<number> {
+export async function getZapCount(_client: NostrClient, _eventId: string): Promise<number> {
   // This is a simplified version - in production you'd want to cache these
   // and subscribe to updates
   return 0

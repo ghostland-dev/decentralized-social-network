@@ -21,7 +21,7 @@ export function useZapCount(eventId: string) {
               "#e": [eventId],
             },
           ],
-          (event) => {
+          (_event) => {
             setZapCount((prev) => prev + 1)
           },
           () => {

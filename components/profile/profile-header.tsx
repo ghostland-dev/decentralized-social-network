@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Image from "next/image"
 import { useNostr } from "@/contexts/nostr-context"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -12,16 +13,17 @@ import type { NostrProfile } from "@/lib/nostr/types"
 interface ProfileHeaderProps {
   pubkey: string
   isOwnProfile: boolean
+  profile?: NostrProfile | null
 }
 
-export function ProfileHeader({ pubkey, isOwnProfile }: ProfileHeaderProps) {
+export function ProfileHeader({ pubkey, isOwnProfile, profile: initialProfile }: ProfileHeaderProps) {
   const { client } = useNostr()
-  const [profile, setProfile] = useState<NostrProfile | null>(null)
+  const [profile, setProfile] = useState<NostrProfile | null>(initialProfile || null)
   const [showEditDialog, setShowEditDialog] = useState(false)
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
-    if (!client) return
+    if (!client || initialProfile) return
 
     const loadProfile = async () => {
       const prof = await client.getProfile(pubkey)
@@ -29,7 +31,7 @@ export function ProfileHeader({ pubkey, isOwnProfile }: ProfileHeaderProps) {
     }
 
     loadProfile()
-  }, [client, pubkey])
+  }, [client, pubkey, initialProfile])
 
   const handleCopyPubkey = async () => {
     await navigator.clipboard.writeText(pubkey)
@@ -64,9 +66,11 @@ export function ProfileHeader({ pubkey, isOwnProfile }: ProfileHeaderProps) {
           <div className="flex items-start justify-between mb-4">
             <div className="relative -mt-20">
               {profile?.picture ? (
-                <img
-                  src={profile.picture || "/placeholder.svg"}
+                <Image
+                  src={profile.picture}
                   alt={profile?.name || "User"}
+                  width={128}
+                  height={128}
                   className="h-32 w-32 rounded-full border-4 border-background object-cover"
                 />
               ) : (

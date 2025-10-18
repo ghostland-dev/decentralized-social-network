@@ -1,9 +1,11 @@
 "use client"
 
-import { SimplePool, type Event } from "nostr-tools/pool"
-import { finalizeEvent } from "nostr-tools/pure"
+import { SimplePool } from "nostr-tools/pool"
+import { type Event, finalizeEvent } from "nostr-tools/pure"
+import type { Filter } from "nostr-tools/filter"
+import { mergeFilters } from "nostr-tools/filter"
 import * as nip04 from "nostr-tools/nip04"
-import { hexToBytes } from "@noble/hashes/utils"
+import { hexToBytes } from "@noble/hashes/utils.js"
 import type { NostrRelay, NostrProfile } from "./types"
 
 class NostrClient {
@@ -34,8 +36,11 @@ class NostrClient {
     return signedEvent
   }
 
-  async subscribeToEvents(filters: any[], onEvent: (event: Event) => void, onEose?: () => void) {
-    const sub = this.pool.subscribeMany(this.relays, filters, {
+  async subscribeToEvents(filters: Filter[], onEvent: (event: Event) => void, onEose?: () => void) {
+    // Merge multiple filters into one for subscribeMany
+    const mergedFilter = filters.length === 1 ? filters[0] : mergeFilters(...filters)
+    
+    const sub = this.pool.subscribeMany(this.relays, mergedFilter, {
       onevent: onEvent,
       oneose: onEose,
     })

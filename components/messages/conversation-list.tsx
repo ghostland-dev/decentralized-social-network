@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Image from "next/image"
 import { useNostr } from "@/contexts/nostr-context"
 import { NostrKind, type NostrProfile } from "@/lib/nostr/types"
 import { formatDistanceToNow } from "date-fns"
@@ -45,7 +46,7 @@ export function ConversationList({ selectedPubkey, onSelectConversation }: Conve
             },
           ],
           (event) => {
-            const otherPubkey = event.pubkey === user.pubkey ? event.tags.find((t) => t[0] === "p")?.[1] : event.pubkey
+            const otherPubkey = event.pubkey === user.pubkey ? event.tags.find((t: string[]) => t[0] === "p")?.[1] : event.pubkey
 
             if (!otherPubkey) return
 
@@ -115,9 +116,11 @@ export function ConversationList({ selectedPubkey, onSelectConversation }: Conve
         >
           <div className="flex-shrink-0">
             {conv.profile?.picture ? (
-              <img
-                src={conv.profile.picture || "/placeholder.svg"}
+              <Image
+                src={conv.profile.picture}
                 alt=""
+                width={48}
+                height={48}
                 className="h-12 w-12 rounded-full object-cover"
               />
             ) : (

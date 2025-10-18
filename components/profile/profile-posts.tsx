@@ -8,12 +8,13 @@ import { NostrKind, type NostrEvent, type NostrProfile } from "@/lib/nostr/types
 
 interface ProfilePostsProps {
   pubkey: string
+  profile?: NostrProfile | null
 }
 
-export function ProfilePosts({ pubkey }: ProfilePostsProps) {
+export function ProfilePosts({ pubkey, profile: initialProfile }: ProfilePostsProps) {
   const { client } = useNostr()
   const [posts, setPosts] = useState<NostrEvent[]>([])
-  const [profile, setProfile] = useState<NostrProfile | null>(null)
+  const [profile, setProfile] = useState<NostrProfile | null>(initialProfile || null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -21,8 +22,10 @@ export function ProfilePosts({ pubkey }: ProfilePostsProps) {
 
     const loadPosts = async () => {
       try {
-        const prof = await client.getProfile(pubkey)
-        setProfile(prof)
+        if (!initialProfile) {
+          const prof = await client.getProfile(pubkey)
+          setProfile(prof)
+        }
 
         const sub = await client.subscribeToEvents(
           [
@@ -53,7 +56,7 @@ export function ProfilePosts({ pubkey }: ProfilePostsProps) {
     }
 
     loadPosts()
-  }, [client, pubkey])
+  }, [client, pubkey, initialProfile])
 
   if (loading) {
     return (

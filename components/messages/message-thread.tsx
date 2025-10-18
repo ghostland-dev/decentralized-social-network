@@ -3,6 +3,7 @@
 import type React from "react"
 
 import { useState, useEffect, useRef } from "react"
+import Image from "next/image"
 import { useNostr } from "@/contexts/nostr-context"
 import { NostrKind, type NostrProfile } from "@/lib/nostr/types"
 import { Button } from "@/components/ui/button"
@@ -149,7 +150,13 @@ export function MessageThread({ pubkey }: MessageThreadProps) {
       {/* Header */}
       <div className="p-4 border-b border-border flex items-center gap-3">
         {profile?.picture ? (
-          <img src={profile.picture || "/placeholder.svg"} alt="" className="h-10 w-10 rounded-full object-cover" />
+          <Image
+            src={profile.picture}
+            alt=""
+            width={40}
+            height={40}
+            className="h-10 w-10 rounded-full object-cover"
+          />
         ) : (
           <div className="h-10 w-10 rounded-full bg-gradient-to-br from-primary to-accent" />
         )}

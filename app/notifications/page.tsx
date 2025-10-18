@@ -65,13 +65,16 @@ export default function NotificationsPage() {
             })
 
             // Fetch author profile
-            if (!profiles.has(event.pubkey)) {
-              client.getProfile(event.pubkey).then((profile) => {
-                if (profile) {
-                  setProfiles((prev) => new Map(prev).set(event.pubkey, profile))
-                }
-              })
-            }
+            setProfiles((prev) => {
+              if (!prev.has(event.pubkey)) {
+                client.getProfile(event.pubkey).then((profile) => {
+                  if (profile) {
+                    setProfiles((p) => new Map(p).set(event.pubkey, profile))
+                  }
+                })
+              }
+              return prev
+            })
           },
           () => {
             setLoading(false)

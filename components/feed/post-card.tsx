@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { formatDistanceToNow } from "date-fns"
+import Image from "next/image"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Heart, Repeat2, MessageCircle, Share, Loader2, Zap } from "lucide-react"
@@ -41,9 +42,8 @@ export function PostCard({ event, authorName, authorPicture, authorProfile }: Po
     try {
       await likePost(client, event.id, event.pubkey, user.privkey)
       toast.success("Post liked!")
-    } catch (error) {
+    } catch (_error) {
       toast.error("Failed to like post")
-      console.error(error)
     } finally {
       setIsLiking(false)
     }
@@ -56,9 +56,8 @@ export function PostCard({ event, authorName, authorPicture, authorProfile }: Po
     try {
       await repostPost(client, event, user.privkey)
       toast.success("Post reposted!")
-    } catch (error) {
+    } catch (_error) {
       toast.error("Failed to repost")
-      console.error(error)
     } finally {
       setIsReposting(false)
     }
@@ -68,7 +67,7 @@ export function PostCard({ event, authorName, authorPicture, authorProfile }: Po
     try {
       await navigator.clipboard.writeText(`nostr:${event.id}`)
       toast.success("Event ID copied to clipboard")
-    } catch (error) {
+    } catch (_error) {
       toast.error("Failed to copy")
     }
   }
@@ -80,9 +79,11 @@ export function PostCard({ event, authorName, authorPicture, authorProfile }: Po
           {/* Avatar */}
           <div className="flex-shrink-0">
             {authorPicture ? (
-              <img
-                src={authorPicture || "/placeholder.svg"}
+              <Image
+                src={authorPicture}
                 alt={authorName || "User"}
+                width={40}
+                height={40}
                 className="h-10 w-10 rounded-full object-cover"
               />
             ) : (

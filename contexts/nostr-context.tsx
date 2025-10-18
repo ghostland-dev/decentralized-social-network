@@ -27,13 +27,6 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<NostrUser | null>(null)
   const [client, setClient] = useState<NostrClient | null>(null)
 
-  useEffect(() => {
-    const keys = loadKeysFromLocalStorage()
-    if (keys) {
-      initializeUser(keys.privateKey, keys.publicKey)
-    }
-  }, [])
-
   const initializeUser = useCallback(async (privateKey: string, publicKey: string) => {
     const newClient = new NostrClient(DEFAULT_RELAYS)
     setClient(newClient)
@@ -47,6 +40,13 @@ export function NostrProvider({ children }: { children: React.ReactNode }) {
       relays: DEFAULT_RELAYS,
     })
   }, [])
+
+  useEffect(() => {
+    const keys = loadKeysFromLocalStorage()
+    if (keys) {
+      initializeUser(keys.privateKey, keys.publicKey)
+    }
+  }, [initializeUser])
 
   const login = useCallback(
     async (privateKey: string) => {

@@ -32,6 +32,8 @@ export interface NostrUser {
   relays: NostrRelay[]
 }
 
+// DEFAULT_RELAYS moved to lib/env.ts for better configuration management
+// This is kept for backward compatibility but should use env.defaultRelays
 export const DEFAULT_RELAYS: NostrRelay[] = [
   { url: "wss://relay.damus.io", read: true, write: true },
   { url: "wss://relay.nostr.band", read: true, write: true },

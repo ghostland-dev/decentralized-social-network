@@ -51,7 +51,7 @@ export function LoginDialog({ open, onOpenChange }: LoginDialogProps) {
       await login(processedKey)
       toast.success("Successfully logged in!")
       onOpenChange(false)
-    } catch (error) {
+    } catch (_error) {
       toast.error("Invalid private key")
     } finally {
       setLoading(false)
@@ -115,7 +115,7 @@ export function LoginDialog({ open, onOpenChange }: LoginDialogProps) {
 
                 <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-3">
                   <p className="text-xs text-destructive font-medium">
-                    ⚠️ Save your private key securely! You'll need it to access your account. If you lose it, you'll lose
+                    ⚠️ Save your private key securely! You&apos;ll need it to access your account. If you lose it, you&apos;ll lose
                     access forever.
                   </p>
                 </div>
