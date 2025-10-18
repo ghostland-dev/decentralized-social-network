@@ -1,4 +1,5 @@
 "use client"
+import { logger } from "@/lib/logger"
 
 import { useState, useEffect } from "react"
 import { useNostr } from "@/contexts/nostr-context"
@@ -78,7 +79,7 @@ export function ConversationList({ selectedPubkey, onSelectConversation }: Conve
           sub.close()
         }
       } catch (error) {
-        console.error("Failed to load conversations:", error)
+        logger.error("Failed to load conversations:", error)
         setLoading(false)
       }
     }

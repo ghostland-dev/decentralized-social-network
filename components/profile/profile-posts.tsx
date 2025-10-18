@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { useNostr } from "@/contexts/nostr-context"
 import { PostCard } from "@/components/feed/post-card"
 import { Spinner } from "@/components/ui/spinner"
+import { logger } from "@/lib/logger"
 import { NostrKind, type NostrEvent, type NostrProfile } from "@/lib/nostr/types"
 
 interface ProfilePostsProps {
@@ -47,7 +48,7 @@ export function ProfilePosts({ pubkey }: ProfilePostsProps) {
           sub.close()
         }
       } catch (error) {
-        console.error("Failed to load posts:", error)
+        logger.error('Failed to load posts', error)
         setLoading(false)
       }
     }

@@ -1,4 +1,5 @@
 "use client"
+import { logger } from "@/lib/logger"
 
 import { useState } from "react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
@@ -70,7 +71,7 @@ export function ZapDialog({
       onOpenChange(false)
     } catch (error) {
       toast.error("Failed to send zap")
-      console.error(error)
+      logger.error(error)
     } finally {
       setLoading(false)
     }

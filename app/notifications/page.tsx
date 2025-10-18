@@ -1,4 +1,5 @@
 "use client"
+import { logger } from "@/lib/logger"
 
 import { useEffect, useState } from "react"
 import { useNostr } from "@/contexts/nostr-context"
@@ -82,7 +83,7 @@ export default function NotificationsPage() {
           sub.close()
         }
       } catch (error) {
-        console.error("Failed to load notifications:", error)
+        logger.error("Failed to load notifications:", error)
         setLoading(false)
       }
     }

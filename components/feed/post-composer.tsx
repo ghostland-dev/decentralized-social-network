@@ -1,4 +1,5 @@
 "use client"
+import { logger } from "@/lib/logger"
 
 import { useState } from "react"
 import { useNostr } from "@/contexts/nostr-context"
@@ -32,7 +33,7 @@ export function PostComposer() {
       setContent("")
     } catch (error) {
       toast.error("Failed to publish post")
-      console.error(error)
+      logger.error(error)
     } finally {
       setIsPosting(false)
     }

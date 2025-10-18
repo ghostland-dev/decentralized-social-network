@@ -1,4 +1,5 @@
 "use client"
+import { logger } from "@/lib/logger"
 
 import { useEffect, useState } from "react"
 import { useParams, useRouter } from "next/navigation"
@@ -76,7 +77,7 @@ export default function PostDetailPage() {
           repliesSub.close()
         }
       } catch (error) {
-        console.error("Failed to load post:", error)
+        logger.error("Failed to load post:", error)
         setLoading(false)
       }
     }
