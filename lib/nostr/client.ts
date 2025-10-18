@@ -1,9 +1,10 @@
 "use client"
 
-import { SimplePool, type Event } from "nostr-tools/pool"
+import { SimplePool } from "nostr-tools/pool"
+import type { Event } from "nostr-tools"
 import { finalizeEvent } from "nostr-tools/pure"
 import * as nip04 from "nostr-tools/nip04"
-import { hexToBytes } from "@noble/hashes/utils"
+import { hexToBytes } from "./encoding"
 import type { NostrRelay, NostrProfile } from "./types"
 
 class NostrClient {
@@ -35,7 +36,7 @@ class NostrClient {
   }
 
   async subscribeToEvents(filters: any[], onEvent: (event: Event) => void, onEose?: () => void) {
-    const sub = this.pool.subscribeMany(this.relays, filters, {
+    const sub = this.pool.subscribeMany(this.relays, filters as any, {
       onevent: onEvent,
       oneose: onEose,
     })

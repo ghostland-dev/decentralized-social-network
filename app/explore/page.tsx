@@ -1,6 +1,8 @@
 "use client"
 
 import { useState } from "react"
+
+export const dynamic = 'force-dynamic'
 import { Sidebar } from "@/components/layout/sidebar"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"

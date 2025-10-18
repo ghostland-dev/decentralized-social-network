@@ -1,6 +1,8 @@
 "use client"
 
 import { useState } from "react"
+
+export const dynamic = 'force-dynamic'
 import { useNostr } from "@/contexts/nostr-context"
 import { Sidebar } from "@/components/layout/sidebar"
 import { ConversationList } from "@/components/messages/conversation-list"

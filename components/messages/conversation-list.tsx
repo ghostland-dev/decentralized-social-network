@@ -45,7 +45,7 @@ export function ConversationList({ selectedPubkey, onSelectConversation }: Conve
             },
           ],
           (event) => {
-            const otherPubkey = event.pubkey === user.pubkey ? event.tags.find((t) => t[0] === "p")?.[1] : event.pubkey
+            const otherPubkey = event.pubkey === user.pubkey ? event.tags.find((t: string[]) => t[0] === "p")?.[1] : event.pubkey
 
             if (!otherPubkey) return
 

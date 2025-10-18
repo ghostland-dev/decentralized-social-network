@@ -1,6 +1,8 @@
 "use client"
 
 import { useNostr } from "@/contexts/nostr-context"
+
+export const dynamic = 'force-dynamic'
 import { Sidebar } from "@/components/layout/sidebar"
 import { ProfileHeader } from "@/components/profile/profile-header"
 import { ProfilePosts } from "@/components/profile/profile-posts"

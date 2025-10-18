@@ -1,6 +1,8 @@
 "use client"
 
 import { useNostr } from "@/contexts/nostr-context"
+
+export const dynamic = 'force-dynamic'
 import { Sidebar } from "@/components/layout/sidebar"
 import { RelayManager } from "@/components/settings/relay-manager"
 import { KeyManagement } from "@/components/settings/key-management"

@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
+
+export const dynamic = 'force-dynamic'
 import { useParams } from "next/navigation"
 import { useNostr } from "@/contexts/nostr-context"
 import { Sidebar } from "@/components/layout/sidebar"
@@ -44,9 +46,9 @@ export default function UserProfilePage() {
           </div>
         ) : (
           <>
-            <ProfileHeader profile={profile} pubkey={pubkey} isOwnProfile={false} />
+            <ProfileHeader pubkey={pubkey} isOwnProfile={false} />
             <div className="max-w-2xl mx-auto px-6">
-              <ProfilePosts pubkey={pubkey} profile={profile} />
+              <ProfilePosts pubkey={pubkey} />
             </div>
           </>
         )}

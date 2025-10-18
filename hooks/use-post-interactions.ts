@@ -51,7 +51,7 @@ export function usePostInteractions(eventId: string, eventAuthor: string) {
                 }
               } else if (event.kind === NostrKind.Text) {
                 // Check if it's a reply
-                const isReply = event.tags.some((tag) => tag[0] === "e" && tag[3] === "reply")
+                const isReply = event.tags.some((tag: string[]) => tag[0] === "e" && tag[3] === "reply")
                 if (isReply) {
                   newInteractions.comments++
                 }

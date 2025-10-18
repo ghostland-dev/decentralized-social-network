@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react"
+
+export const dynamic = 'force-dynamic'
 import { useParams, useRouter } from "next/navigation"
 import { useNostr } from "@/contexts/nostr-context"
 import { Sidebar } from "@/components/layout/sidebar"
