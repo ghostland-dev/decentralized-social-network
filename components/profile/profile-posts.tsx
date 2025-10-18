@@ -8,21 +8,30 @@ import { NostrKind, type NostrEvent, type NostrProfile } from "@/lib/nostr/types
 
 interface ProfilePostsProps {
   pubkey: string
+  profile?: NostrProfile | null
 }
 
-export function ProfilePosts({ pubkey }: ProfilePostsProps) {
+export function ProfilePosts({ pubkey, profile: profileProp }: ProfilePostsProps) {
   const { client } = useNostr()
   const [posts, setPosts] = useState<NostrEvent[]>([])
   const [profile, setProfile] = useState<NostrProfile | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    if (profileProp) {
+      setProfile(profileProp)
+    }
+  }, [profileProp])
+
+  useEffect(() => {
     if (!client) return
 
     const loadPosts = async () => {
       try {
-        const prof = await client.getProfile(pubkey)
-        setProfile(prof)
+        if (!profileProp) {
+          const prof = await client.getProfile(pubkey)
+          setProfile(prof)
+        }
 
         const sub = await client.subscribeToEvents(
           [
