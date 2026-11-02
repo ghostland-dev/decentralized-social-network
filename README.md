@@ -1,30 +1,38 @@
-# Decentralized social network
+# Decentralized Social Network
 
-*Automatically synced with your [v0.app](https://v0.app) deployments*
+Social network client built on public-key identities.
 
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/moneycraft/v0-decentralized-social-network)
-[![Built with v0](https://img.shields.io/badge/Built%20with-v0.app-black?style=for-the-badge)](https://v0.app/chat/projects/mNeiv9pCtoz)
+## Features
 
-## Overview
+- Feed, posts and messaging
+- Profiles addressed by public key
+- Notifications and settings
 
-This repository will stay in sync with your deployed chats on [v0.app](https://v0.app).
-Any changes you make to your deployed app will be automatically pushed to this repository from [v0.app](https://v0.app).
+## Tech Stack
 
-## Deployment
+- Next.js
+- React
+- TypeScript
+- Tailwind CSS
+- shadcn/ui (Radix UI)
 
-Your project is live at:
+## Getting Started
 
-**[https://vercel.com/moneycraft/v0-decentralized-social-network](https://vercel.com/moneycraft/v0-decentralized-social-network)**
+```bash
+git clone https://github.com/ghostland-dev/decentralized-social-network.git
+cd decentralized-social-network
+npm install
+npm run dev
+```
 
-## Build your app
+Other scripts:
 
-Continue building your app on:
+- `npm run build`: next build
+- `npm run lint`: eslint .
 
-**[https://v0.app/chat/projects/mNeiv9pCtoz](https://v0.app/chat/projects/mNeiv9pCtoz)**
+## Author
 
-## How It Works
+**Ismail.M**, Software Engineer & DevOps
 
-1. Create and modify your project using [v0.app](https://v0.app)
-2. Deploy your chats from the v0 interface
-3. Changes are automatically pushed to this repository
-4. Vercel deploys the latest version from this repository
+- GitHub: [@ghostland-dev](https://github.com/ghostland-dev)
+- Website: [ismail-mouyahada.com](https://www.ismail-mouyahada.com)
