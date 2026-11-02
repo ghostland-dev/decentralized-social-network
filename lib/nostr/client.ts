@@ -3,7 +3,7 @@
 import { SimplePool, type Event } from "nostr-tools/pool"
 import { finalizeEvent } from "nostr-tools/pure"
 import * as nip04 from "nostr-tools/nip04"
-import { hexToBytes } from "@noble/hashes/utils"
+import { hexToBytes } from "@noble/hashes/utils.js"
 import type { NostrRelay, NostrProfile } from "./types"
 
 class NostrClient {
